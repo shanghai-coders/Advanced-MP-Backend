@@ -2,12 +2,9 @@ const moment = require('moment');
 const fs = require('fs');
 
 class AccessToken {
-  // options = {
-  //   filename: '/tmp/cache.json',
-  //   persistant: true/false
-  // }
   constructor(options = {
-    
+    filename: './cache.json',
+    persistant: true
   }) {
     if (options.persistant === true && !options.filename) {
       console.error('Please provide a filename for the cache to work.');
