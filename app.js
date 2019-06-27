@@ -1,17 +1,23 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+require('dotenv').config();
 
-var accessToken = require('./routes/accessToken');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var app = express();
+const wechat = require('./routes/wechat');
 
-app.use(logger('dev'));
+const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/wechat', wechat);
+
+app.use('/', (req, res) => {
+    res.status(200).json('API Running');
+})
 
 module.exports = app;
