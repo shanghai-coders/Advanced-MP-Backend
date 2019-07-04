@@ -3,7 +3,7 @@ const router = express.Router();
 
 // WeChat Stuff
 const { Wechat, MiniProgram } = require('wechat-jssdk');
-const WXDecrypt = require('./decrypt');
+const WXDecrypt = require('../utils/decrypt');
 
 const wechatConfig = {
   "appId": process.env.MP_APPID,
@@ -15,10 +15,10 @@ const wechatConfig = {
 };
 const wx = new Wechat(wechatConfig);  
 
-router.get('/', async(req, res, next) => {
-  const { access_token } = await wx.jssdk.getAccessToken();
-  res.status(200).json(access_token);
-});
+// router.get('/', async(req, res, next) => {
+//   const { access_token } = await wx.jssdk.getAccessToken();
+//   res.status(200).json(access_token);
+// });
 
 router.post('/login', async (req, res) => {
   const { iv, encryptedData } = req.body;
@@ -33,7 +33,6 @@ router.post('/login', async (req, res) => {
       const pc = new WXDecrypt(process.env.MP_APPID, session_key);
 
       const decryptedData = pc.decryptData(encryptedData , iv);
-      console.log({ decryptedData });
 
       // It's up to you if you want to send back the data or store it in the database
       res.json(decryptedData);
