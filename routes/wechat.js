@@ -21,21 +21,14 @@ const wx = new Wechat(wechatConfig);
 // });
 
 router.post('/login', async (req, res) => {
-  const { iv, encryptedData } = req.body;
   const { code } = req.query;
-  if(code && iv && encryptedData) {
+  if(code) {
     try {
       // Get the session key with code
-      const data = await wx.miniProgram.getSession(req.query.code);
-      const { session_key } = data;
-
-      // Use the session key and iv to decrypt data
-      const pc = new WXDecrypt(process.env.MP_APPID, session_key);
-
-      const decryptedData = pc.decryptData(encryptedData , iv);
+      const data = await wx.miniProgram.getSession(code);
 
       // It's up to you if you want to send back the data or store it in the database
-      res.json(decryptedData);
+      res.json(data);
       return;
     } catch (error) {
       console.log(error);
