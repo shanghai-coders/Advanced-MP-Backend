@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const axios = require('axios');
 
 // WeChat Stuff
 const { Wechat, MiniProgram } = require('wechat-jssdk');
@@ -52,6 +53,20 @@ router.post('/save-formId', async (req, res) => {
 })
 
 router.post('/send-message', async (req, res) => {
+  console.log(req.body);
+  const { form_id, open_id, order_id } = req.body;
+
+  if(form_id && open_id && order_id ) {
+    try {
+      const { data } = await axios.get(`http://localhost:3000/order/${order_id}`);
+      console.log(data);
+      res.status(200).json("");
+    } catch (error) {
+      console.log(error);
+      res.status(500);
+    }
+  }
+
   /*
     req.body = {
       open_id: String,
@@ -81,38 +96,39 @@ router.post('/send-message', async (req, res) => {
     },
   }
   */
-  try {
-    // Get access token
-   const { access_token } = await wx.jssdk.getAccessToken();
-  //  console.log(access_token);
-   // Get template id either hardcoded or making a request to https://api.weixin.qq.com/cgi-bin/wxopen/template/list?access_token=ACCESS_TOKEN
-   const template_id = "rOCU8DIXCI1FBIxhg8zpUGyqnYhqT2obhj70Hn8VK2M";
-   // Send message
-   const message = {
-      form_id: req.body.form_id,
-      // Recipient's OpenID
-      touser: req.body.touser,
-      template_id,
-      data: {
-        keyword1: {
-          value: '10/10/2018',
-        },
-        keyword2: {
-          value: 'Product Name',
-        },
-        keyword3: {
-          value: 'Delivery Platform',
-        },
-      }
-    };
+  // try {
+  //   // Get access token
+  //  const { access_token } = await wx.jssdk.getAccessToken();
+  // //  console.log(access_token);
+  //  // Get template id either hardcoded or making a request to https://api.weixin.qq.com/cgi-bin/wxopen/template/list?access_token=ACCESS_TOKEN
+  //  const template_id = "rOCU8DIXCI1FBIxhg8zpUGyqnYhqT2obhj70Hn8VK2M";
+  //  // Send message
+  //  const message = {
+  //     form_id: req.body.form_id,
+  //     // Recipient's OpenID
+  //     touser: req.body.touser,
+  //     template_id,
+  //     data: {
+  //       keyword1: {
+  //         value: '10/10/2018',
+  //       },
+  //       keyword2: {
+  //         value: 'Product Name',
+  //       },
+  //       keyword3: {
+  //         value: 'Delivery Platform',
+  //       },
+  //     }
+  //   };
 
-   const response = await axios.post(`https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=${access_token}`, message);
+  //  const response = await axios.post(`https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=${access_token}`, message);
 
-    res.status(200).json(response.data);
- } catch (e) {
-   console.error(e.message || e);
-   res.status(500).json({ error: e.message || e });
- }
+  //   res.status(200).json(response.data);
+  
+//  } catch (e) {
+//    console.error(e.message || e);
+//    res.status(500).json({ error: e.message || e });
+//  }
 });
 
 module.exports = router;

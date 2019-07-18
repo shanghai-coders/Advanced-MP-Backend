@@ -47,7 +47,9 @@
     {
       "id": 1,
       "created_at": "",
-      "receipt": {},
+      "receipt": {
+        "open_id": "o_9cI0eQnBn5bvDuQeYJIgtaq6Dg"
+      },
       "totalPrice": 45,
       "totalQuantity": 2,
       "status": "paid",
@@ -57,23 +59,27 @@
           "name_en": "Scratching Post",
           "name_zh": "猫抓板",
           "price": 30,
-          "img_url": "https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/44514716/O1CN01LTRXpD1khyNiK4xZ6_!!0-saturn_solar.jpg_580x580Q90.jpg"
+          "img_url": "https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/44514716/O1CN01LTRXpD1khyNiK4xZ6_!!0-saturn_solar.jpg_580x580Q90.jpg",
+          "quantity": 1
         },
         {
           "id": 6,
           "name_en": "Rubbing Post",
           "name_zh": "蹭痒器",
           "price": 15,
-          "img_url": "https://img.alicdn.com/imgextra/i3/43105568/TB21dHgxuSSBuNjy0FlXXbBpVXa_!!0-saturn_solar.jpg_250x250.jpg"
+          "img_url": "https://img.alicdn.com/imgextra/i3/43105568/TB21dHgxuSSBuNjy0FlXXbBpVXa_!!0-saturn_solar.jpg_250x250.jpg",
+          "quantity": 1
         }
       ]
     },
     {
       "id": 2,
       "created_at": "",
-      "receipt": {},
-      "totalPrice": 45,
-      "totalQuantity": 2,
+      "receipt": {
+        "open_id": "o_9cI0eQnBn5bvDuQeYJIgtaq6Dg"
+      },
+      "totalPrice": 60,
+      "totalQuantity": 3,
       "status": "paid",
       "products": [
         {
@@ -81,14 +87,16 @@
           "name_en": "Scratching Post",
           "name_zh": "猫抓板",
           "price": 30,
-          "img_url": "https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/44514716/O1CN01LTRXpD1khyNiK4xZ6_!!0-saturn_solar.jpg_580x580Q90.jpg"
+          "img_url": "https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/44514716/O1CN01LTRXpD1khyNiK4xZ6_!!0-saturn_solar.jpg_580x580Q90.jpg",
+          "quantity": 1
         },
         {
-          "id": 6,
-          "name_en": "Rubbing Post",
-          "name_zh": "蹭痒器",
+          "id": 3,
+          "name_en": "Rainbow Balls (Pack of 5)",
+          "name_zh": "5个彩虹球球",
           "price": 15,
-          "img_url": "https://img.alicdn.com/imgextra/i3/43105568/TB21dHgxuSSBuNjy0FlXXbBpVXa_!!0-saturn_solar.jpg_250x250.jpg"
+          "img_url": "https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2823048745/O1CN01aUdDWn2ETG8HiEyyl_!!0-item_pic.jpg_580x580Q90.jpg",
+          "quantity": 2
         }
       ]
     }
