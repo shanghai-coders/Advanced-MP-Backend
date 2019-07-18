@@ -51,7 +51,15 @@ router.post('/save-formId', async (req, res) => {
   // save form ID here, to send a message to a user who didn't trigger the form.
 })
 
-router.use('/send-message', async (req, res) => {
+router.post('/send-message', async (req, res) => {
+  /*
+    req.body = {
+      open_id: String,
+      form_id: String,
+      template_id: String,
+      data: Object
+    }
+  */
   /*
   {
     "form_id": "1d16026cadf5fef48705f8dc416120dc",

@@ -42,5 +42,55 @@
       "price": 15,
       "img_url": "https://img.alicdn.com/imgextra/i3/43105568/TB21dHgxuSSBuNjy0FlXXbBpVXa_!!0-saturn_solar.jpg_250x250.jpg"
     }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "created_at": "",
+      "receipt": {},
+      "totalPrice": 45,
+      "totalQuantity": 2,
+      "status": "paid",
+      "products": [
+        {
+          "id": 1,
+          "name_en": "Scratching Post",
+          "name_zh": "猫抓板",
+          "price": 30,
+          "img_url": "https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/44514716/O1CN01LTRXpD1khyNiK4xZ6_!!0-saturn_solar.jpg_580x580Q90.jpg"
+        },
+        {
+          "id": 6,
+          "name_en": "Rubbing Post",
+          "name_zh": "蹭痒器",
+          "price": 15,
+          "img_url": "https://img.alicdn.com/imgextra/i3/43105568/TB21dHgxuSSBuNjy0FlXXbBpVXa_!!0-saturn_solar.jpg_250x250.jpg"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "created_at": "",
+      "receipt": {},
+      "totalPrice": 45,
+      "totalQuantity": 2,
+      "status": "paid",
+      "products": [
+        {
+          "id": 1,
+          "name_en": "Scratching Post",
+          "name_zh": "猫抓板",
+          "price": 30,
+          "img_url": "https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/44514716/O1CN01LTRXpD1khyNiK4xZ6_!!0-saturn_solar.jpg_580x580Q90.jpg"
+        },
+        {
+          "id": 6,
+          "name_en": "Rubbing Post",
+          "name_zh": "蹭痒器",
+          "price": 15,
+          "img_url": "https://img.alicdn.com/imgextra/i3/43105568/TB21dHgxuSSBuNjy0FlXXbBpVXa_!!0-saturn_solar.jpg_250x250.jpg"
+        }
+      ]
+    }
   ]
 }
