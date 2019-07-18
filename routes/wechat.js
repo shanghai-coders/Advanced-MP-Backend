@@ -60,7 +60,7 @@ router.post('/send-message', async (req, res) => {
     try {
       const { data } = await axios.get(`http://localhost:3000/order/${order_id}`);
       console.log(data);
-      res.status(200).json("");
+      res.status(200).json(data);
     } catch (error) {
       console.log(error);
       res.status(500);
