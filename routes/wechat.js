@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const { hostUrl } = require('../utils/config');
 
 // WeChat Stuff
 const { Wechat, MiniProgram } = require('wechat-jssdk');
@@ -58,7 +59,7 @@ router.post('/send-message', async (req, res) => {
 
   if(form_id && open_id && order_id ) {
     try {
-      const { data } = await axios.get(`http://localhost:3000/order/${order_id}`);
+      const { data } = await axios.get(`${hostUrl}/order/${order_id}`);
       console.log(data);
       res.status(200).json(data);
     } catch (error) {
