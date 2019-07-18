@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const moment = require('moment');
 const { hostUrl } = require('../utils/config');
 
 // WeChat Stuff
@@ -60,76 +61,47 @@ router.post('/send-message', async (req, res) => {
   if(form_id && open_id && order_id ) {
     try {
       const { data } = await axios.get(`${hostUrl}/order/${order_id}`);
-      console.log(data);
-      res.status(200).json(data);
+
+      if(data) {
+        // Prepare form data
+        const formData = {
+          "form_id": form_id,
+          "touser": open_id,
+          // Get template id either hardcoded or making a request to https://api.weixin.qq.com/cgi-bin/wxopen/template/list?access_token=ACCESS_TOKEN
+          "template_id": "Ekab2Y-FtsZQO01m9fMvW6mMTsFbh4MbqfPFbtanF44",
+          "data": {
+            keyword1: {
+              value: data.products[0].name_en,
+            },
+            keyword2: {
+              value: data.totalPrice,
+            },
+            keyword3: {
+              value: moment().format('YYYY-MM-DD hh:mm'),
+            },
+            keyword4: {
+              value: data.id,
+            },
+          },
+        }
+
+        console.log(formData);
+
+        // Get access token
+        const { access_token } = await wx.jssdk.getAccessToken();
+    
+        const response = await axios.post(`https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=${access_token}`, formData);
+
+        res.status(200).json(response.data);
+        return;
+      }
+
+      res.status(401).json("Order not found");
     } catch (error) {
       console.log(error);
       res.status(500);
     }
   }
-
-  /*
-    req.body = {
-      open_id: String,
-      form_id: String,
-      template_id: String,
-      data: Object
-    }
-  */
-  /*
-  {
-    "form_id": "1d16026cadf5fef48705f8dc416120dc",
-    "touser": 'oIEcc5CTl4nRK1hORoSghj19N-GA', // openID
-    "template_id":'epDAg_fFYdvsVD5qDLS2jpxXU45wfNWME36q1HMjgTg',
-    "data": {
-      keyword1: {
-        value: 'Product Name',
-      },
-      keyword2: {
-        value: 'Product Description',
-      },
-      keyword3: {
-        value: '10/10/2018',
-      },
-      keyword4: {
-        value: '10/10/2018',
-      },
-    },
-  }
-  */
-  // try {
-  //   // Get access token
-  //  const { access_token } = await wx.jssdk.getAccessToken();
-  // //  console.log(access_token);
-  //  // Get template id either hardcoded or making a request to https://api.weixin.qq.com/cgi-bin/wxopen/template/list?access_token=ACCESS_TOKEN
-  //  const template_id = "rOCU8DIXCI1FBIxhg8zpUGyqnYhqT2obhj70Hn8VK2M";
-  //  // Send message
-  //  const message = {
-  //     form_id: req.body.form_id,
-  //     // Recipient's OpenID
-  //     touser: req.body.touser,
-  //     template_id,
-  //     data: {
-  //       keyword1: {
-  //         value: '10/10/2018',
-  //       },
-  //       keyword2: {
-  //         value: 'Product Name',
-  //       },
-  //       keyword3: {
-  //         value: 'Delivery Platform',
-  //       },
-  //     }
-  //   };
-
-  //  const response = await axios.post(`https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=${access_token}`, message);
-
-  //   res.status(200).json(response.data);
-  
-//  } catch (e) {
-//    console.error(e.message || e);
-//    res.status(500).json({ error: e.message || e });
-//  }
 });
 
 module.exports = router;

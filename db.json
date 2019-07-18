@@ -46,7 +46,7 @@
   "orders": [
     {
       "id": 1,
-      "created_at": "",
+      "created_at": "1563446785599",
       "receipt": {
         "open_id": "o_9cI0eQnBn5bvDuQeYJIgtaq6Dg"
       },
@@ -74,7 +74,7 @@
     },
     {
       "id": 2,
-      "created_at": "",
+      "created_at": "1563446785599",
       "receipt": {
         "open_id": "o_9cI0eQnBn5bvDuQeYJIgtaq6Dg"
       },
