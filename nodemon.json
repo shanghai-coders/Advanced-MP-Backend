@@ -1,0 +1,6 @@
+{
+    "ignore": [
+        "wechat-info.json",
+        "db.json"
+    ]
+}
