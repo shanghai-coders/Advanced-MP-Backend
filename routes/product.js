@@ -34,19 +34,23 @@ router.get('/', async(req, res, next) => {
 //   res.status(200).json(products);
 // });
 
-// router.get('/getMultiple/:ids', async(req, res, next) => {
-//   const products = db['products'];
-//   const { ids } = req.params;
-//   const parsedIds = JSON.parse(ids);
-//   const idsArray = parsedIds.split(",");
-//   const idsMap = idsArray.reduce((accum, curr) => {
-//     accum[curr] = curr;
-//     return accum;
-//   }, {});
-//   const filteredProducts = products.filter((product) => idsMap[product.id]);
+router.get('/getMultiple/:ids', async(req, res, next) => {
+  try {
+    const products = db.getAll('products');
+    const { ids } = req.params;
+    const parsedIds = JSON.parse(ids);
+    const idsMap = parsedIds.reduce((accum, curr) => {
+      accum[curr] = curr;
+      return accum;
+    }, {});
+    const filteredProducts = products.filter((product) => idsMap[product.id]);
 
-//   res.status(200).json(filteredProducts);
-// })
+    res.status(200).json(filteredProducts);
+    
+  } catch (error) {
+    res.status(500);
+  }
+})
 
 
 module.exports = router;
