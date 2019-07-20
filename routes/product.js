@@ -24,14 +24,14 @@ router.get('/', async(req, res, next) => {
 // });
 
 // router.get('/create', async(req, res, next) => {
-//   const products = db.create('products', {
-//       "id": 7,
-//       "name_en": "Testing Product",
-//       "name_zh": "猫抓板",
-//       "price": 30,
-//       "img_url": "https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/44514716/O1CN01LTRXpD1khyNiK4xZ6_!!0-saturn_solar.jpg_580x580Q90.jpg"
-//   });
-//   res.status(200).json(products);
+  // const products = db.create('products', {
+  //     "id": 7,
+  //     "name_en": "Testing Product",
+  //     "name_zh": "猫抓板",
+  //     "price": 30,
+  //     "img_url": "https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i3/44514716/O1CN01LTRXpD1khyNiK4xZ6_!!0-saturn_solar.jpg_580x580Q90.jpg"
+  // });
+  // res.status(200).json(products);
 // });
 
 router.get('/getMultiple/:ids', async(req, res, next) => {

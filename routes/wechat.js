@@ -8,6 +8,7 @@ const { hostUrl } = require('../utils/config');
 const { Wechat, MiniProgram } = require('wechat-jssdk');
 const WXDecrypt = require('../utils/decrypt');
 
+// Initialization for WeChat JSSDK
 const wechatConfig = {
   "appId": process.env.MP_APPID,
   "appSecret": process.env.MP_APPSECRET,
@@ -18,10 +19,20 @@ const wechatConfig = {
 };
 const wx = new Wechat(wechatConfig);  
 
-// router.get('/', async(req, res, next) => {
-//   const { access_token } = await wx.jssdk.getAccessToken();
-//   res.status(200).json(access_token);
-// });
+// WeChat Payment
+const Payment = require('wechat-pay').Payment;
+
+// Initialization for WeChat Payment
+const initConfig = {
+  partnerKey: "<partnerkey>",
+  appId: process.env.MP_APPID,
+  mchId: "<mchid>",
+  notifyUrl: "<notifyurl>",
+};
+
+const payment = new Payment(initConfig);
+
+
 
 router.post('/login', async (req, res) => {
   const { iv, encryptedData } = req.body;
@@ -47,6 +58,20 @@ router.post('/login', async (req, res) => {
     }
   }
   res.json('No Code Found');
+});
+
+// WeChat Pyament
+router.post('/payment', async (req, res) => {
+  try {
+    const order = req.body;
+    
+    payment.getBrandWCPayRequestParams(order, (err, payargs) => {
+      res.json(payargs);
+    });
+    
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 // Template Message
@@ -83,8 +108,6 @@ router.post('/send-message', async (req, res) => {
             },
           },
         }
-
-        console.log(formData);
 
         // Get access token
         const { access_token } = await wx.jssdk.getAccessToken();

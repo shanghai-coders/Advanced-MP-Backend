@@ -37,8 +37,9 @@ exports.create = (model, data) => {
         db[model].push(data);
         
         updateDB(db);
+        return data;
     }
-    return [];
+    return {};
 }
 
 exports.update = (model, id, data) => {
