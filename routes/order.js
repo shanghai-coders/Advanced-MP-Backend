@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db.json');
+const db = require('../utils/db');
 
 router.get('/', async(req, res, next) => {
-  const orders = db['orders'];
 
+  const orders = db.getAll('orders');
   res.status(200).json(orders);
+
 });
 
 router.get('/:id', async(req, res, next) => {
-  const orders = db['orders'];
   const { id } = req.params;
-  const filteredOrders = orders.filter((order) => String(order.id) === String(id));
+  const order = db.getById('orders', id);
 
-  res.status(200).json(filteredOrders[0]);
+  res.status(200).json(order);
 });
 
 

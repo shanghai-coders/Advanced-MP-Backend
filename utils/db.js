@@ -18,6 +18,18 @@ exports.getAll = (model) => {
     return [];
 }
 
+exports.getById = (model, id) => {
+    const db = getDB();
+    if(db[model]) {
+        
+        const dataFound = db[model].filter((data) => String(data.id) === String(id));
+        if(dataFound[0]) {
+            return dataFound[0];
+        }
+    }
+    return {};
+}
+
 exports.create = (model, data) => {
     const db = getDB();
     if(db[model]) {
