@@ -14,6 +14,15 @@ router.get('/', async(req, res, next) => {
   res.status(200).json(products);
 });
 
+// router.get('/update/:id', async(req, res, next) => {
+//    const { id } = req.params;
+//   const products = db.update('products', id, {
+//       "id": 1,
+//       "name_en": "Rubbing Post"
+//   });
+//   res.status(200).json(products);
+// });
+
 // router.get('/create', async(req, res, next) => {
 //   const products = db.create('products', {
 //       "id": 7,

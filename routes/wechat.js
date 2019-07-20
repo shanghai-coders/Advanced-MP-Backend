@@ -55,7 +55,6 @@ router.post('/save-formId', async (req, res) => {
 })
 
 router.post('/send-message', async (req, res) => {
-  console.log(req.body);
   const { form_id, open_id, order_id } = req.body;
 
   if(form_id && open_id && order_id ) {

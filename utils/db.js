@@ -40,3 +40,19 @@ exports.create = (model, data) => {
     }
     return [];
 }
+
+exports.update = (model, id, data) => {
+    const db = getDB();
+    if(db[model]) {
+        db[model].forEach((d) => {
+            if(String(d.id) === String(id)) {
+                if(data.id) {
+                    delete data.id
+                }
+                d = Object.assign(d, data);
+            }
+        });
+        updateDB(db);
+    }
+    return [];
+}
