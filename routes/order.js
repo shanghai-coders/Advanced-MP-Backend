@@ -22,7 +22,6 @@ router.post('/create', async (req, res) => {
   if(req.body) {
     try {
       const order = db.create('orders', req.body);
-      console.log('create order', JSON.stringify({ id: order.id }))
       const { data } = await axios.post(`${hostUrl}/wechat/payment`, {
         body: req.body.products[0].name_zh,
         attach: JSON.stringify({id: order.id}),

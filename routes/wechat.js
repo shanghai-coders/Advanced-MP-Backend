@@ -80,14 +80,11 @@ router.use('/payment-callback', PaymentMiddleware(paymentConfig).getNotify().don
   var openid = message.openid;
   var order_id = message.out_trade_no;
   var attach = {};
-  console.log('callback from wechat', message);
   try {
     attach = JSON.parse(message.attach);
-    console.log(attach);
     const { id } = attach;
     // Update order status
     axios.post(`${hostUrl}/order/update/${id}`, { status: 'paid'}).then((data) => {
-      console.log(data);
       res.reply('success');
     })
   } catch(e){
