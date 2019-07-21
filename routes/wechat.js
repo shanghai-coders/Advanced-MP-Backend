@@ -76,7 +76,7 @@ router.post('/payment', async (req, res) => {
 });
 
 
-router.use('payment-callback', PaymentMiddleware(paymentConfig).getNotify().done((message, req, res, next) => {
+router.use('/payment-callback', PaymentMiddleware(paymentConfig).getNotify().done((message, req, res, next) => {
   var openid = message.openid;
   var order_id = message.out_trade_no;
   var attach = {};
