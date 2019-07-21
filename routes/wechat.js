@@ -76,7 +76,7 @@ router.post('/payment', async (req, res) => {
 });
 
 
-router.use('payment-callback', PaymentMiddleware(paymentConfig).getNotify().done( async (message, req, res, next) => {
+router.use('payment-callback', PaymentMiddleware(paymentConfig).getNotify().done((message, req, res, next) => {
   var openid = message.openid;
   var order_id = message.out_trade_no;
   var attach = {};
@@ -85,10 +85,11 @@ router.use('payment-callback', PaymentMiddleware(paymentConfig).getNotify().done
     attach = JSON.parse(message.attach);
     console.log(attach);
     const { id } = attach;
-    const { data } = await axios.post(`${hostUrl}/order/update/${id}`, { status: 'paid'});
-    console.log(data);
     // Update order status
-    res.reply('success');
+    axios.post(`${hostUrl}/order/update/${id}`, { status: 'paid'}).then((data) => {
+      console.log(data);
+      res.reply('success');
+    })
   } catch(e){
 
     res.reply(new Error('...'))
