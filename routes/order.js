@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const db = require('../utils/db');
+const { hostUrl } = require('../utils/config');
 
 router.get('/', async(req, res, next) => {
 
@@ -18,22 +19,26 @@ router.get('/:id', async(req, res, next) => {
 });
 
 router.post('/create', async (req, res) => {
+  console.log('order create');
   if(req.body) {
-    const order = db.create('orders', req.body);
+    try {
+      const order = db.create('orders', req.body);
 
-    console.log(order);
+      const { data } = await axios.post(`${hostUrl}/wechat/payment`, {
+        body: 'Product Title',
+        attach: '{"Stringified":"Object"}',
+        out_trade_no: 'kfc' + (+new Date),
+        total_fee: 1,
+        spbill_create_ip: req.ip,
+        openid: req.body.open_id,
+        trade_type: 'JSAPI'
+      });
 
-    const { data } = await axios.post(`${hostUrl}/wechat/payment`, {
-      body: 'Product Title',
-      attach: '{"Stringified":"Object"}',
-      out_trade_no: 'kfc' + (+new Date),
-      total_fee: 1,
-      spbill_create_ip: req.ip,
-      openid: req.user.openid,
-      trade_type: 'JSAPI'
-    });
-
-    return res.status(200).json(data);
+      return res.status(200).json(data);
+      
+    } catch (error) {
+      return res.status(500).json(error);
+    }
   }
   return res.status(404);
 });

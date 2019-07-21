@@ -21,16 +21,17 @@ const wx = new Wechat(wechatConfig);
 
 // WeChat Payment
 const Payment = require('wechat-pay').Payment;
+const PaymentMiddleware = require('wechat-pay').middleware;
 
 // Initialization for WeChat Payment
-const initConfig = {
-  partnerKey: "<partnerkey>",
+const paymentConfig = {
+  partnerKey: process.env.MERCHANT_SECRET,
   appId: process.env.MP_APPID,
-  mchId: "<mchid>",
-  notifyUrl: "<notifyurl>",
+  mchId: process.env.MERCHANT_ID,
+  notifyUrl: `${hostUrl}/wechat/payment-callback`,
 };
 
-const payment = new Payment(initConfig);
+const payment = new Payment(paymentConfig);
 
 
 
@@ -73,6 +74,24 @@ router.post('/payment', async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+
+router.use('payment-callback', PaymentMiddleware(paymentConfig).getNotify().done((message, req, res, next) => {
+  var openid = message.openid;
+  var order_id = message.out_trade_no;
+  var attach = {};
+  console.log('callback from wechat', message);
+  try {
+    attach = JSON.parse(message.attach);
+    console.log(attach);
+    // Update order status
+    res.reply('success');
+  } catch(e){
+
+    res.reply(new Error('...'))
+  }
+
+}));
 
 // Template Message
 router.post('/save-formId', async (req, res) => {
