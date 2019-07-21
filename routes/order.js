@@ -46,6 +46,7 @@ router.post('/update/:id', async (req, res) => {
   if(req.body) {
     try {
       const order = db.update('orders', req.params.id, req.body);
+      console.log('order updated', req.parasm.id, req.body);
 
       return res.status(200).json(order);
       
