@@ -22,7 +22,7 @@ router.post('/create', async (req, res) => {
   if(req.body) {
     try {
       const order = db.create('orders', req.body);
-
+      console.log('create order', JSON.stringify({ id: order.id }))
       const { data } = await axios.post(`${hostUrl}/wechat/payment`, {
         body: req.body.products[0].name_zh,
         attach: JSON.stringify({id: order.id}),
@@ -46,11 +46,11 @@ router.post('/update/:id', async (req, res) => {
   if(req.body) {
     try {
       const order = db.update('orders', req.params.id, req.body);
-      console.log('order updated', req.parasm.id, req.body);
 
       return res.status(200).json(order);
       
     } catch (error) {
+      console.log(error);
       return res.status(500).json(error);
     }
   }
