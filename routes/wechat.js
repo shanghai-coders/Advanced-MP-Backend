@@ -67,6 +67,7 @@ router.post('/payment', async (req, res) => {
     const order = req.body;
     
     payment.getBrandWCPayRequestParams(order, (err, payargs) => {
+      console.log(payargs);
       res.json(payargs);
     });
     
