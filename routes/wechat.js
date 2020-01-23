@@ -104,52 +104,44 @@ router.post("/save-formId", async (req, res) => {
 });
 
 router.post("/send-message", async (req, res) => {
-  const { form_id, open_id, order_id } = req.body;
+  console.log(req.body);
+  const { open_id } = req.body;
+  console.log("send message", open_id);
 
-  if (form_id && open_id && order_id) {
-    try {
-      const { data } = await axios.get(`${hostUrl}/order/${order_id}`);
+  const { access_token } = await wx.jssdk.getAccessToken();
 
-      if (data) {
-        // Prepare form data
-        const formData = {
-          form_id: form_id,
-          touser: open_id,
-          // Get template id either hardcoded or making a request to https://api.weixin.qq.com/cgi-bin/wxopen/template/list?access_token=ACCESS_TOKEN
-          template_id: "Ekab2Y-FtsZQO01m9fMvW6mMTsFbh4MbqfPFbtanF44",
-          data: {
-            keyword1: {
-              value: data.products[0].name_en
-            },
-            keyword2: {
-              value: data.totalPrice
-            },
-            keyword3: {
-              value: moment().format("YYYY-MM-DD hh:mm")
-            },
-            keyword4: {
-              value: data.id
-            }
+  try {
+    if (open_id) {
+      const message = {
+        touser: open_id,
+        template_id: "vnqBrzHJpwvB5P0WZ6iLaih_PtJT9qYha6qB64u42eU",
+        page: "/pages/index/index",
+        data: {
+          thing1: {
+            value: "Class Name"
+          },
+          time4: {
+            value: "2015年01月05日"
+          },
+          name2: {
+            value: "User Name"
           }
-        };
+        }
+      };
 
-        // Get access token
-        const { access_token } = await wx.jssdk.getAccessToken();
+      const response = await axios.post(
+        `https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=${access_token}`,
+        message
+      );
 
-        const response = await axios.post(
-          `https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=${access_token}`,
-          formData
-        );
-
-        res.status(200).json(response.data);
-        return;
-      }
-
-      res.status(401).json("Order not found");
-    } catch (error) {
-      console.log(error);
-      res.status(500);
+      res.status(200).json(response.data);
+      return;
     }
+
+    res.status(401).json("Open_id not found");
+  } catch (error) {
+    console.log(error);
+    res.status(500);
   }
 });
 
