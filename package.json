@@ -15,7 +15,7 @@
     "express": "~4.16.0",
     "moment": "^2.24.0",
     "morgan": "~1.9.0",
-    "wechat-jssdk": "^5.0.1",
+    "wechat-jssdk": "^5.0.8",
     "wechat-pay": "^0.3.2"
   },
   "devDependencies": {
